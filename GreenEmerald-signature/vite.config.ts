@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
-import * as packageJson from './package.json';
 
 export default defineConfig({
   plugins: [
@@ -13,7 +12,11 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/components/index.ts'),
       name: 'GreenEmeraldSignature',
-      fileName: (format) => `${packageJson.name}.${format}.js`,
+      fileName: (format) => {
+        if (format === 'es') return 'index.es.js';
+        if (format === 'umd') return 'index.umd.js';
+        return `index.${format}.js`;
+      }
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
@@ -22,6 +25,7 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
         },
+        assetFileNames: 'style.css',
       },
     },
   },
