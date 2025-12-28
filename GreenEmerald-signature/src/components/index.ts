@@ -1,0 +1,1 @@
+export { default as GreenEmeraldSignature } from './GreenEmeraldSignature/GreenEmeraldSignature';
